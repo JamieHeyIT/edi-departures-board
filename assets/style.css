@@ -1,0 +1,28 @@
+
+:root {
+  --bg: #0b1a2b;    /* deep navy */
+  --row: #0f2740;   /* slightly lighter row bg */
+  --text: #e6f2ff;  /* off-white */
+  --accent: #19d3ff;/* cyan headings */
+  --warn: #ffd166;  /* amber for delays */
+  --ok:   #8aff8a;  /* green for boarding/GoToGate */
+  --font: "IBM Plex Mono", Consolas, Menlo, monospace;
+}
+
+html, body { height: 100%; margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); }
+.wrap { display:flex; flex-direction:column; height:100vh; padding:1.5rem; box-sizing:border-box; }
+header { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:1rem; }
+header h1 { margin:0; font-weight:700; letter-spacing:1px; color:var(--accent); }
+
+.grid { display:grid; grid-template-columns: 10rem 6rem 12rem 1fr 8rem 10rem; gap:.25rem; }
+.head, .row { display:contents; }
+.head div { font-weight:700; color:var(--accent); padding:.35rem .6rem; text-transform:uppercase; font-size:.95rem; }
+.row div { padding:.45rem .6rem; background: var(--row); font-size:1.25rem; }
+.row:nth-child(even) div { background: #0d2238; }
+.status { text-transform:uppercase; font-weight:700; letter-spacing:.5px; }
+.status.ok { color: var(--ok); }
+.status.warn { color: var(--warn); }
+footer { margin-topfooter { margin-top:auto; opacity:.75; font-size:.9rem; }
+
+@media (min-width: 1800px) {
+  .row div { font-size: 1.35rem; }
