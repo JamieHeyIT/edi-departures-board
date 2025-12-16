@@ -1,0 +1,54 @@
+
+// scripts/fetch-fids.mjs
+import fs from 'node:fs/promises';
+import path from 'node:path';
+
+const appId  = process.env.FIDS_APP_ID;
+const appKey = process.env.FIDS_APP_KEY;
+
+if (!appId || !appKey) {
+  console.error('Missing FIDS_APP_ID / FIDS_APP_KEY');
+  process.exit(1);
+}
+
+// Cirium/FlightStats FIDS endpoint (EDI departures, local time)
+const params = new URLSearchParams({
+  codeType: 'IATA',
+  requestedFields: [
+    'airlineCode','airlineName','flightNumber','city',
+    'gate','remarks','scheduledTime','estimatedTime','terminal'
+  ].join(','),
+  includeCodeshares: 'false',
+  timeFormat: '24',
+  utc: 'false',
+  numHoursBefore: '1',
+  numHoursAfter: '6'
+});
+const url = `https://api.flightstats.com/flex/fids/rest/v1/json/EDI/departures?${params}&appId=${appId}&appKey=${appKey}`;
+
+try {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`FIDS error ${res.status}`);
+  const json = await res.json();
+  const list = (json.fidsData || []).map(f => ({
+    airlineCode:   f.airlineCode || '',
+    airlineName:   f.airlineName || '',
+    flightNumber:  f.flightNumber || '',
+    city:          f.city || '',
+    gate:          f.gate || '',
+    terminal:      f.terminal || '',
+    scheduledTime: f.scheduledTime || '',
+    estimatedTime: f.estimatedTime || '',
+    remarks:       f.remarks || ''
+  }));
+
+  const outDir = path.join(process.cwd(), 'data');
+  await fs.mkdir(outDir, { recursive: true });
+  await fs.writeFile(path.join(outDir, 'departures.json'), JSON.stringify(list, null, 2), 'utf8');
+
+  console.log(`Saved ${list.length} departures to data/departures.json`);
+} catch (err) {
+  console.error(err);
+  process.exit(2);
+}
+``
