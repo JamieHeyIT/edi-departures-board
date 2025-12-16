@@ -1,0 +1,31 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Edinburgh (EDI) — Departures</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Edinburgh (EDI) — Departures</h1>
+      <div id="clock">--:--</div>
+    </header>
+
+    <div class="grid" id="board">
+      <div class="head">
+        <div>Time</div><div>Flight</div><div>Airline</div><div>Destination</div><div>Gate</div><div>Status</div>
+      </div>
+      <!-- rows injected by app.js -->
+    </div>
+
+    <footer>Data refresh: ~every 5 minutes (server) + every 60s (client)</footer>
+  </div>
+
+  <script src="assets/app.js"></script>
+</body>
+</
